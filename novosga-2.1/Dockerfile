@@ -6,7 +6,7 @@ ENV NOVOSGA_VER=v2.1 \
 
 ENV NOVOSGA_FILE=novosga.tar.gz \
     NOVOSGA_DIR=/var/www/html \
-    NOVOSGA_URL=https://github.com/novosga/novosga/archive/${NOVOSGA_VER}.tar.gz \
+    NOVOSGA_URL=https://github.com/EdilvoLima/novosga-2.1.0/archive/refs/tags/${NOVOSGA_VER}.tar.gz \
     APP_ENV=prod \
     DATABASE_URL=mysql://127.0.0.1:3306/novosga?charset=utf8mb4&serverVersion=5.7
 
@@ -17,6 +17,7 @@ RUN set -xe \
     && echo "${NOVOSGA_MD5}  ${NOVOSGA_FILE}" | md5sum -c \
     && tar -xz --strip-components=1 -f ${NOVOSGA_FILE} \
     && rm ${NOVOSGA_FILE} \
+    && composer update -W \
     && composer install --no-dev -o
 
 FROM php:7.1-apache
